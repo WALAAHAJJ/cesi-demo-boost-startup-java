@@ -1,0 +1,36 @@
+name: Build & Unit Tests
+
+on:
+  workflow_call:
+
+jobs:
+  build-and-test:
+    name: Build & Unit Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '25'
+          distribution: 'liberica'
+          cache: 'maven'
+
+      - name: Build with Maven
+        run: mvn clean compile -DskipTests=false
+
+      - name: Run unit tests
+        run: mvn test
+
+      - name: Generate test coverage report
+        run: mvn jacoco:report || true
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: target/site/jacoco
+          retention-days: 7

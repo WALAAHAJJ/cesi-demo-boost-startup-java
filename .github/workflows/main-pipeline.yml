@@ -15,9 +15,8 @@ permissions:
   actions: read
 
 jobs:
-  # ═══════════════════════════════════════════════
-  # Les jobs seront ajoutés progressivement dans les exercices suivants
-  # ═══════════════════════════════════════════════
+  build-and-test:
+    uses: ./.github/workflows/build-unit-tests.yml
 
   placeholder:
     name: Pipeline Principal - En Construction
